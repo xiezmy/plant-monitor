@@ -3,8 +3,18 @@ enum RadioMessage {
     check_plant_wetness = 9373,
     need_water = 18906,
     happy = 4585,
-    sad = 2621
+    sad = 2621,
+    check_humidity = 20801
 }
+radio.onReceivedMessage(RadioMessage.check_humidity, function () {
+    if (PlantMonitor.readHumidity() > 60) {
+        radio.sendMessage(RadioMessage.sad)
+    } else if (PlantMonitor.readHumidity() < 40) {
+        radio.sendMessage(RadioMessage.sad)
+    } else {
+        radio.sendMessage(RadioMessage.happy)
+    }
+})
 input.onButtonPressed(Button.A, function () {
     show_wetness = false
     basic.clearScreen()

@@ -27,7 +27,7 @@ input.onButtonPressed(Button.B, function () {
     show_wetness = true
 })
 let show_wetness = false
-radio.setGroup(94107)
+radio.setGroup(99)
 PlantMonitor.startMon()
 show_wetness = true
 loops.everyInterval(1000, function () {

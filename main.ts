@@ -3,8 +3,18 @@ enum RadioMessage {
     check_plant_wetness = 9373,
     need_water = 18906,
     happy = 4585,
-    sad = 2621
+    sad = 2621,
+    check_humidity = 20801
 }
+radio.onReceivedMessage(RadioMessage.check_humidity, function () {
+    if (PlantMonitor.readHumidity() > 60) {
+        radio.sendMessage(RadioMessage.sad)
+    } else if (PlantMonitor.readHumidity() < 40) {
+        radio.sendMessage(RadioMessage.sad)
+    } else {
+        radio.sendMessage(RadioMessage.happy)
+    }
+})
 input.onButtonPressed(Button.A, function () {
     show_wetness = false
     basic.clearScreen()
@@ -37,13 +47,6 @@ loops.everyInterval(1000, function () {
     datalogger.createCV("Soil Moisture", PlantMonitor.readWetness())
     )
 })
-loops.everyInterval(60000, function () {
-    if (PlantMonitor.readWetness() <= 10) {
-        radio.sendMessage(RadioMessage.need_water)
-    } else {
-        basic.pause(100)
-    }
-})
 basic.forever(function () {
     serial.writeValue("wetness", PlantMonitor.readWetnessAnalog())
     basic.pause(1000)
@@ -54,5 +57,12 @@ basic.forever(function () {
         PlantMonitor.readWetness(),
         100
         )
+    }
+})
+loops.everyInterval(3600000, function () {
+    if (PlantMonitor.readWetness() <= 10) {
+        radio.sendMessage(RadioMessage.need_water)
+    } else {
+        basic.pause(100)
     }
 })

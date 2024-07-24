@@ -37,6 +37,13 @@ loops.everyInterval(1000, function () {
     datalogger.createCV("Soil Moisture", PlantMonitor.readWetness())
     )
 })
+loops.everyInterval(60000, function () {
+    if (PlantMonitor.readWetness() <= 10) {
+        radio.sendMessage(RadioMessage.need_water)
+    } else {
+        basic.pause(100)
+    }
+})
 basic.forever(function () {
     serial.writeValue("wetness", PlantMonitor.readWetnessAnalog())
     basic.pause(1000)
@@ -47,12 +54,5 @@ basic.forever(function () {
         PlantMonitor.readWetness(),
         100
         )
-    }
-})
-loops.everyInterval(3600000, function () {
-    if (PlantMonitor.readWetness() <= 10) {
-        radio.sendMessage(RadioMessage.need_water)
-    } else {
-        basic.pause(100)
     }
 })

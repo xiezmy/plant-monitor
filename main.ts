@@ -9,11 +9,11 @@ input.onButtonPressed(Button.A, function () {
     show_wetness = false
     basic.clearScreen()
     basic.showNumber(PlantMonitor.readTemp())
-    basic.pause(1000)
+    basic.pause(200)
     show_wetness = true
 })
 radio.onReceivedMessage(RadioMessage.check_plant_wetness, function () {
-    if (PlantMonitor.readWetness() <= 10) {
+    if (PlantMonitor.readWetness() <= 25) {
         radio.sendMessage(RadioMessage.sad)
     } else {
         radio.sendMessage(RadioMessage.happy)
@@ -23,7 +23,7 @@ input.onButtonPressed(Button.B, function () {
     show_wetness = false
     basic.clearScreen()
     basic.showNumber(PlantMonitor.readHumidity())
-    basic.pause(1000)
+    basic.pause(200)
     show_wetness = true
 })
 let show_wetness = false
@@ -47,5 +47,12 @@ basic.forever(function () {
         PlantMonitor.readWetness(),
         100
         )
+    }
+})
+loops.everyInterval(3600000, function () {
+    if (PlantMonitor.readWetness() <= 10) {
+        radio.sendMessage(RadioMessage.need_water)
+    } else {
+        basic.pause(100)
     }
 })

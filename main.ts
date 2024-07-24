@@ -67,13 +67,6 @@ loops.everyInterval(1000, function () {
     datalogger.createCV("Soil Moisture", PlantMonitor.readWetness())
     )
 })
-loops.everyInterval(60000, function () {
-    if (PlantMonitor.readWetness() <= 10) {
-        radio.sendMessage(RadioMessage.need_water)
-    } else {
-        basic.pause(100)
-    }
-})
 basic.forever(function () {
     if (show_wetness == true) {
         led.plotBarGraph(
@@ -90,4 +83,11 @@ loops.everyInterval(86400000, function () {
     daytime = true
     basic.pause(43200000)
     daytime = false
+})
+loops.everyInterval(3600000, function () {
+    if (PlantMonitor.readWetness() <= 10) {
+        radio.sendMessage(RadioMessage.need_water)
+    } else {
+        basic.pause(100)
+    }
 })

@@ -8,12 +8,28 @@ enum RadioMessage {
     check_humidity = 20801,
     message1 = 49434
 }
+radio.onReceivedMessage(RadioMessage.check_humidity, function () {
+    if (PlantMonitor.readHumidity() > 60) {
+        radio.sendMessage(RadioMessage.sad)
+    } else if (PlantMonitor.readHumidity() < 40) {
+        radio.sendMessage(RadioMessage.sad)
+    } else {
+        radio.sendMessage(RadioMessage.happy)
+    }
+})
 input.onButtonPressed(Button.A, function () {
     show_wetness = false
     basic.clearScreen()
     basic.showNumber(PlantMonitor.readTemp())
     basic.pause(200)
     show_wetness = true
+})
+radio.onReceivedMessage(RadioMessage.check_plant_wetness, function () {
+    if (PlantMonitor.readWetness() <= 25) {
+        radio.sendMessage(RadioMessage.sad)
+    } else {
+        radio.sendMessage(RadioMessage.happy)
+    }
 })
 radio.onReceivedMessage(RadioMessage.check_light, function () {
     if (daytime == true) {
@@ -38,15 +54,6 @@ input.onButtonPressed(Button.B, function () {
     basic.showNumber(PlantMonitor.readHumidity())
     basic.pause(200)
     show_wetness = true
-})
-radio.onReceivedMessage(RadioMessage.check_humidity, function () {
-    if (PlantMonitor.readHumidity() > 60) {
-        radio.sendMessage(RadioMessage.sad)
-    } else if (PlantMonitor.readHumidity() < 40) {
-        radio.sendMessage(RadioMessage.sad)
-    } else {
-        radio.sendMessage(RadioMessage.happy)
-    }
 })
 let daytime = false
 let show_wetness = false

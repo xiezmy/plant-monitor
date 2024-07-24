@@ -7,7 +7,8 @@
         "microphone": "*",
         "Plant Monitor": "github:monkmakes/plant-monitor-makecode#v0.0.5",
         "datalogger": "*",
-        "radio-broadcast": "*"
+        "radio-broadcast": "*",
+        "envirobit": "github:pimoroni/pxt-envirobit#v0.0.5"
     },
     "files": [
         "main.blocks",

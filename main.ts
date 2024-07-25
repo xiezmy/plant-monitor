@@ -11,10 +11,16 @@ enum RadioMessage {
 radio.onReceivedMessage(RadioMessage.check_humidity, function () {
     if (PlantMonitor.readHumidity() > 60) {
         radio.sendMessage(RadioMessage.sad)
+        basic.pause(1000)
+        radio.sendString("" + (PlantMonitor.readHumidity()))
     } else if (PlantMonitor.readHumidity() < 40) {
         radio.sendMessage(RadioMessage.sad)
+        basic.pause(1000)
+        radio.sendString("" + (PlantMonitor.readHumidity()))
     } else {
         radio.sendMessage(RadioMessage.happy)
+        basic.pause(1000)
+        radio.sendString("" + (PlantMonitor.readHumidity()))
     }
 })
 input.onButtonPressed(Button.A, function () {
@@ -27,24 +33,36 @@ input.onButtonPressed(Button.A, function () {
 radio.onReceivedMessage(RadioMessage.check_plant_wetness, function () {
     if (PlantMonitor.readWetness() <= 25) {
         radio.sendMessage(RadioMessage.sad)
+        basic.pause(1000)
+        radio.sendString("" + (PlantMonitor.readWetness()))
     } else {
         radio.sendMessage(RadioMessage.happy)
+        basic.pause(1000)
+        radio.sendString("" + (PlantMonitor.readWetness()))
     }
 })
 radio.onReceivedMessage(RadioMessage.check_light, function () {
     if (daytime == true) {
         if (input.lightLevel() >= 150) {
             radio.sendMessage(RadioMessage.happy)
+            basic.pause(1000)
+            radio.sendString("" + (input.lightLevel()))
         } else {
             radio.sendMessage(RadioMessage.sad)
+            basic.pause(1000)
+            radio.sendString("" + (input.lightLevel()))
         }
     } else {
         radio.sendMessage(RadioMessage.nighttime)
         basic.pause(1000)
         if (input.lightLevel() >= 150) {
             radio.sendMessage(RadioMessage.sad)
+            basic.pause(1000)
+            radio.sendString("" + (input.lightLevel()))
         } else {
             radio.sendMessage(RadioMessage.happy)
+            basic.pause(1000)
+            radio.sendString("" + (input.lightLevel()))
         }
     }
 })
@@ -90,4 +108,5 @@ loops.everyInterval(3600000, function () {
     } else {
         basic.pause(100)
     }
+    music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Nyan), music.PlaybackMode.InBackground)
 })

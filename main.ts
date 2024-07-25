@@ -1,6 +1,7 @@
 enum RadioMessage {
     check_light = 55679,
     nighttime = 53104,
+    play_music = 42561,
     sad = 2621,
     happy = 4585,
     check_plant_wetness = 9373,
@@ -29,6 +30,9 @@ input.onButtonPressed(Button.A, function () {
     basic.showNumber(PlantMonitor.readTemp())
     basic.pause(200)
     show_wetness = true
+})
+radio.onReceivedMessage(RadioMessage.play_music, function () {
+    music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Prelude), music.PlaybackMode.InBackground)
 })
 radio.onReceivedMessage(RadioMessage.check_plant_wetness, function () {
     if (PlantMonitor.readWetness() <= 25) {

@@ -108,5 +108,4 @@ loops.everyInterval(3600000, function () {
     } else {
         basic.pause(100)
     }
-    music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Nyan), music.PlaybackMode.InBackground)
 })

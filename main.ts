@@ -27,7 +27,7 @@ radio.onReceivedMessage(RadioMessage.check_humidity, function () {
 input.onButtonPressed(Button.A, function () {
     show_wetness = false
     basic.clearScreen()
-    basic.showNumber(PlantMonitor.readTemp())
+    basic.showNumber(PlantMonitor.readWetness())
     basic.pause(200)
     show_wetness = true
 })
